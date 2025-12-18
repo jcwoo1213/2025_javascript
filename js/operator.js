@@ -23,3 +23,4 @@ console.log("!(num1 > num2 && num1 == str1):"+result);
 result = !result;
 console.log("!result:"+result);
 console.log("가나다".charCodeAt(0));
+console.log("ddd");
