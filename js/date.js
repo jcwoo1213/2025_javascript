@@ -36,28 +36,33 @@ switch (today.getDay()) {
 }
 
 //달력 그리기
-function printCalendar(yyyy, mm) {
+function printCalendar(year, month) {
   //1일 -> 화요일.
-  let today = new Date(`${yyyy}-${mm}-01`);
+  let today = new Date(`${year}-${month}-01`);
   const spaces = today.getDay();
-  //31일이 마지막 날.
-  today.setMonth(mm);
+  today.setMonth(month);
   today.setDate(0);
   const lastDate = today.getDate();
-  today.setMonth(mm - 2);
+  today.setMonth(month - 1);
   today.setDate(0);
-  console.log(mm - 2);
+  console.log(month - 2);
   const before_last = today.getDate();
-  const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  let htmlStr = `<table border="2"><caption>${yyyy}년${mm}월 달력</caption><thead><tr>`;
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let htmlStr = `<table border="2"><caption>${year}년${month}월 달력</caption><thead><tr>`;
 
   for (let day of days) {
     htmlStr += `<th>${day}</th>`;
   }
   htmlStr += `</tr></thead><tbody>`;
-  for (let d = 1 - spaces; d <= lastDate; d++) {
+  for (let d = 1 - spaces; d <= lastDate ||(d+spaces)%7!=1; d++) {
     if ((d + spaces) % 7 == 1) htmlStr += `<tr>`;
-    htmlStr += `<td>${d > 0 ? d : before_last + d}</td>`;
+    if(d>lastDate){
+      htmlStr += `<td style=opacity:0.5>${d-lastDate}</td>`;
+    }else if(d>0){
+      htmlStr += `<td >${d}</td>`;
+    }else{
+      htmlStr += `<td style=opacity:0.5>${before_last+d}</td>`;
+    }
     if ((d + spaces) % 7 == 0) htmlStr += `</tr>`;
   }
   htmlStr += `</tbody></table>`;
@@ -93,4 +98,4 @@ printDay(new Date("2025-01-03"));
 printDay(new Date());
 printDay();
 
-printCalendar(2025, 12);
+printCalendar(2025, 10);
