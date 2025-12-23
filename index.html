@@ -8,36 +8,24 @@
 
   <body>
     <h3>자바스크립트 연습</h3>
-    <!-- <ul id="first">
+    <ul id="first">
       <li>1</li>
       <li>2</li>
       <li>3</li>
     </ul>
     <ul id="second">
       내가 좋아하는 음식(정찬우)
-      <li
-        onclick="listclickFnc(event)"
-        onmouseover="mouseOverFnc(event)"
-        onmouseout="mouseOutFnc(event)"
-      >
-        초고추장
-      </li>
-      <li
-        onclick="listclickFnc(event)"
-        onmouseover="mouseOverFnc(event)"
-        onmouseout="mouseOutFnc(event)"
-      >
-        고추냉이
-      </li>
-      <li
-        onclick="listclickFnc(event)"
-        onmouseover="mouseOverFnc(event)"
-        onmouseout="mouseOutFnc(event)"
-      >
-        마늘
-      </li> -->
+      <li>초고추장</li>
+      <li>고추냉이</li>
+      <li>마늘</li>
     </ul>
-    <button>이벤트</button>
+    년도:<input type="number" id="yyyy" value="2025" />
+    <!--  -->
+    월:<input type="number" id="mm" value="12" max="12" min="1" />
+    <button type="button" id="last">←</button>
+    <button type="button" id="btn">달력출력</button>
+    <button type="button" id="next">→</button>
+    <div id="calendar"></div>
     <script src="js/date.js"></script>
   </body>
 </html>

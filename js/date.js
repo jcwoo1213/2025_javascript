@@ -40,33 +40,35 @@ function printCalendar(year, month) {
   //1일 -> 화요일.
   let today = new Date(`${year}-${month}-01`);
   const spaces = today.getDay();
-  today.setMonth(month);
+  today.setMonth(month); //이번달의 마지막날 받기위해 다음달 0일(현재달 마지막날)로 이동
   today.setDate(0);
-  const lastDate = today.getDate();
+  const lastDate = today.getDate(); //출력할 달의 마지막날
   today.setMonth(month - 1);
   today.setDate(0);
-  console.log(month - 2);
-  const before_last = today.getDate();
+  const before_last = today.getDate(); //출력할 달의 전 달의 마지막날
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  let htmlStr = `<table border="2"><caption>${year}년${month}월 달력</caption><thead><tr>`;
+  let htmlStr = `<table border="2"><colgroup><col style=background-color:rgba(255,0,0,0.3)><col span=5><col style=background-color:rgba(0,0,255,0.3)></colgroup><caption>${year}년${month}월 달력</caption><thead><tr>`;
 
   for (let day of days) {
     htmlStr += `<th>${day}</th>`;
   }
   htmlStr += `</tr></thead><tbody>`;
-  for (let d = 1 - spaces; d <= lastDate ||(d+spaces)%7!=1; d++) {
+  for (let d = 1 - spaces; d <= lastDate || (d + spaces) % 7 != 1; d++) {
     if ((d + spaces) % 7 == 1) htmlStr += `<tr>`;
-    if(d>lastDate){
-      htmlStr += `<td style=opacity:0.5>${d-lastDate}</td>`;
-    }else if(d>0){
+    if (d > lastDate) {
+      //이번달은 모두 출력하였고 다음달 표시
+      htmlStr += `<td style=opacity:0.5>${d - lastDate}</td>`;
+    } else if (d > 0) {
+      //이번달 표시
       htmlStr += `<td >${d}</td>`;
-    }else{
-      htmlStr += `<td style=opacity:0.5>${before_last+d}</td>`;
+    } else {
+      //저번달 표시
+      htmlStr += `<td style=opacity:0.5>${before_last + d}</td>`;
     }
     if ((d + spaces) % 7 == 0) htmlStr += `</tr>`;
   }
   htmlStr += `</tbody></table>`;
-  document.writeln(htmlStr);
+  document.querySelector("#calendar").innerHTML = htmlStr;
 }
 //객체, 메소드 =>
 function printDay(date = new Date() /*매개변수 없으면 기본값*/) {
@@ -94,8 +96,40 @@ function printDay(date = new Date() /*매개변수 없으면 기본값*/) {
       break;
   }
 }
-printDay(new Date("2025-01-03"));
-printDay(new Date());
-printDay();
-
-printCalendar(2025, 10);
+let a;
+console.log(a);
+// printDay(new Date("2025-01-03"));
+// printDay(new Date());
+// printDay();
+const year_input = document.querySelector("#yyyy");
+const month_input = document.querySelector("#mm");
+let year = year_input.value;
+let month = month_input.value;
+let printed = false;
+document.querySelector("#btn").addEventListener("click", (e) => {
+  year = parseInt(document.querySelector("#yyyy").value);
+  month = parseInt(document.querySelector("#mm").value);
+  printed = true;
+  printCalendar(year, month);
+});
+document.querySelector("#last").addEventListener("click", (e) => {
+  month--;
+  if (month == 0) {
+    month = 12;
+    year--;
+    year_input.value = year;
+  }
+  month_input.value = month;
+  if (printed) printCalendar(year, month);
+});
+document.querySelector("#next").addEventListener("click", (e) => {
+  month++;
+  if (month == 13) {
+    month = 1;
+    year++;
+    year_input.value = year;
+  }
+  month_input.value = month;
+  if (printed) printCalendar(year, month);
+});
+// printCalendar(2025, 12);
