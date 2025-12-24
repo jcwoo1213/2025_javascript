@@ -103,33 +103,37 @@ console.log(a);
 // printDay();
 const year_input = document.querySelector("#yyyy");
 const month_input = document.querySelector("#mm");
-let year = year_input.value;
-let month = month_input.value;
+
 let printed = false;
 document.querySelector("#btn").addEventListener("click", (e) => {
-  year = parseInt(document.querySelector("#yyyy").value);
-  month = parseInt(document.querySelector("#mm").value);
-  printed = true;
-  printCalendar(year, month);
+  let year = parseInt(document.querySelector("#yyyy").value);
+  let month = parseInt(document.querySelector("#mm").value);
+  if (!printed) {
+    printed = true;
+    e.target.innerText = "달력지우기";
+    printCalendar(year, month);
+  } else {
+    printed = false;
+    e.target.innerText = "달력출력";
+    document.querySelector("#calendar").innerHTML = "";
+  }
 });
 document.querySelector("#last").addEventListener("click", (e) => {
-  month--;
-  if (month == 0) {
-    month = 12;
-    year--;
-    year_input.value = year;
+  month_input.value--;
+  if (month_input.value == 0) {
+    month_input.value = 12;
+    year_input.value--;
   }
-  month_input.value = month;
-  if (printed) printCalendar(year, month);
+
+  if (printed) printCalendar(year_input.value, month_input.value);
 });
 document.querySelector("#next").addEventListener("click", (e) => {
-  month++;
-  if (month == 13) {
-    month = 1;
-    year++;
-    year_input.value = year;
+  month_input.value++;
+  if (month_input.value == 13) {
+    month_input.value = 1;
+    year_input.value++;
   }
-  month_input.value = month;
-  if (printed) printCalendar(year, month);
+
+  if (printed) printCalendar(year_input.value, month_input.value);
 });
 // printCalendar(2025, 12);

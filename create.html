@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Programming</title>
+    <link rel="stylesheet" href="css/subject.css" />
+    <style>
+      .cancel {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Web Programming</h1>
+      <p>공부할 주제를 기록해 보세요</p>
+      <form action="" name="addForm">
+        <label for="subject" class="hidden">주제</label>
+        <input type="text" id="subject" autofocus />
+        <button type="submit">추가</button>
+        <!-- form의 기본type은 submit -->
+      </form>
+      <hr />
+      <ul id="itemList"></ul>
+      <script>
+        // let check = [];
+        //이벤트가 전파 차단(e.stopPropagation())
+        //상위->하위:캡쳐링 하위->상위:버블링
+        document
+          .querySelector('form[name="addForm"]')
+          .addEventListener("submit", (e) => {
+            e.preventDefault();
+            let text = document.querySelector("#subject").value;
+            if (!text) {
+              alert("값을 입력하세요");
+              return;
+            }
+            // if (check.includes(text)) {
+            //   alert("중복");
+            //   return;
+            // }
+            // check.push(text);
+            let btn = document.createElement("button");
+            btn.classList = ["delete"];
+            btn.innerText = "삭제";
+            btn.addEventListener("click", (e) => {
+              console.log("하위");
+              e.stopPropagation();
+              e.target.parentElement.remove();
+            });
+            let liTag = document.createElement("li");
+            liTag.innerText = text;
+            liTag.appendChild(btn);
+
+            liTag.addEventListener("click", (e) => {
+              console.log("상위");
+
+              let target = e.target;
+              if (target.tagName == "BUTTON") {
+                target = e.target.parentElement;
+              }
+              // if (e.target.classList.contains("cancel")) {
+              //   e.target.classList.remove("cancel");
+              // } else {
+              //   e.target.classList.add("cancel");
+              // }
+              target.classList.toggle("cancel");
+            });
+            document.querySelector("#itemList").appendChild(liTag);
+            document.querySelector("#subject").value = "";
+            document.querySelector("#subject").focus();
+          });
+      </script>
+    </div>
+  </body>
+</html>
