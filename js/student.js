@@ -71,19 +71,19 @@ function makeTr(student) {
   del_btn.className = "btn btn-danger";
   del_btn.id = student.studNo;
   td.appendChild(del_btn);
-  console.log(students);
+  // console.log(students);
   del_btn.addEventListener("click", del);
   tr.appendChild(td);
-  del_btn.setAttribute("data-sno", student.studNo);
-  let cor_btn = document.createElement("button");
-  cor_btn.innerText = "수정";
-  cor_btn.value = student.studNo;
-  td = document.createElement("td");
-  td.appendChild(cor_btn);
-  cor_btn.addEventListener("click", (e) => {
-    console.log(e.target.value);
-    document.querySelector('button[class*="info"]').disabled = false;
-  });
+  del_btn.setAttribute("data-studNo", student.studNo); //dataset 이름은 소문자
+  // let cor_btn = document.createElement("button");
+  // cor_btn.innerText = "수정";
+  // cor_btn.value = student.studNo;
+  // td = document.createElement("td");
+  // td.appendChild(cor_btn);
+  // cor_btn.addEventListener("click", (e) => {
+  //   console.log(e.target.value);
+  //   document.querySelector('button[class*="info"]').disabled = false;
+  // });
   tr.appendChild(td);
 
   return tr;
@@ -95,9 +95,11 @@ function clear() {
   document.querySelector("#score").value = "";
 }
 function del(e) {
-  let target = this.dataset.sno;
+  console.log(e);
+  let target = this.dataset.studno;
+  console.log(target);
   students = students.filter((elem) => elem.studNo != target);
-
+  console.log(students);
   makeList();
   // let delete_No = e.target.id;
   // let idx = -1;
